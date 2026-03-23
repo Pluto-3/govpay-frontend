@@ -6,20 +6,21 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Bills from './pages/Bills'
 import Kyc from './pages/Kyc'
-
-const Admin = () => (
-  <div className="flex min-h-screen items-center justify-center bg-gray-50">
-    <p className="text-gray-500">Admin panel coming in Phase 4</p>
-  </div>
-)
+import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminUsers from './pages/admin/AdminUsers'
+import AdminKyc from './pages/admin/AdminKyc'
+import AdminTransactions from './pages/admin/AdminTransactions'
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
+          {/* Public */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/* User */}
           <Route path="/dashboard" element={
             <ProtectedRoute><Dashboard /></ProtectedRoute>
           } />
@@ -29,9 +30,22 @@ export default function App() {
           <Route path="/kyc" element={
             <ProtectedRoute><Kyc /></ProtectedRoute>
           } />
-          <Route path="/admin/*" element={
-            <ProtectedRoute adminOnly><Admin /></ProtectedRoute>
+
+          {/* Admin */}
+          <Route path="/admin" element={
+            <ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>
           } />
+          <Route path="/admin/users" element={
+            <ProtectedRoute adminOnly><AdminUsers /></ProtectedRoute>
+          } />
+          <Route path="/admin/kyc" element={
+            <ProtectedRoute adminOnly><AdminKyc /></ProtectedRoute>
+          } />
+          <Route path="/admin/transactions" element={
+            <ProtectedRoute adminOnly><AdminTransactions /></ProtectedRoute>
+          } />
+
+          {/* Default */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
